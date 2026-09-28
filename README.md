@@ -1,5 +1,73 @@
 # Pull, Otimização e Avaliação de Prompts com LangChain e LangSmith
 
+## Estado deste fork
+
+Este fork implementa o pull da v1, a v2 em YAML, o push público e os seis testes
+de estrutura. A avaliação remota depende das credenciais pessoais do LangSmith e
+de um provedor de LLM. Os números ilustrativos do enunciado não são resultados
+deste fork.
+
+## Técnicas Aplicadas (Fase 2)
+
+- **Few-shot Learning:** dois pares de entrada e saída mostram histórias para um
+  defeito de navegação no Android e para uma cobrança após cancelamento. Eles
+  demonstram os critérios Dado/Quando/Então e o tratamento de uma lacuna real.
+- **Role Prompting:** o sistema atribui o papel de Product Manager, para manter
+  o foco no comportamento esperado e no benefício à pessoa afetada.
+- **Skeleton of Thought:** a instrução organiza a análise em ator, ação,
+  resultado e critérios, e fixa a estrutura da resposta em Markdown.
+
+A v1 repete `{bug_report}` no sistema e no usuário e pede apenas uma história
+genérica. A v2 passa o relato uma vez, na mensagem de usuário, e reserva a
+mensagem de sistema para regras, formato, exemplos e casos incompletos. Ela pede
+para preservar os fatos do relato e explicitar lacunas sem inventar requisitos.
+
+## Resultados Finais
+
+Ainda não há avaliação executada neste fork; portanto, não há notas, captura de
+tela nem link público de dataset para relatar. Após configurar as credenciais,
+execute a avaliação, confira as cinco médias e compartilhe o dataset uma única
+vez. Registre aqui o URL público e as capturas da avaliação e de pelo menos três
+traces. Só declare aprovação quando **cada uma** das cinco métricas e a média
+forem pelo menos 0,8.
+
+## Como Executar
+
+Requer Python 3.10+, conta no LangSmith e chave de um provedor compatível
+(OpenAI ou Gemini). Consulte os [modelos OpenAI](https://platform.openai.com/docs/models)
+ou [modelos Gemini](https://ai.google.dev/gemini-api/docs/models) antes de escolher
+`LLM_MODEL` e `EVAL_MODEL`. Crie o handle público no LangSmith antes do push;
+ele é permanente. Guarde credenciais apenas em `.env`, ignorado pelo Git.
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+cp .env.example .env
+# Preencha LANGSMITH_API_KEY, USERNAME_LANGSMITH_HUB,
+# LLM_PROVIDER, LLM_MODEL, EVAL_MODEL e a chave do provedor.
+python src/pull_prompts.py
+pytest tests/test_prompts.py
+python src/push_prompts.py
+python src/evaluate.py
+```
+
+O pull sobrescreve a cópia local da v1 com o prompt semente publicado. O push
+publica `<handle>/bug_to_user_story_v2` como prompt público. O avaliador cria
+ou reutiliza o dataset com 15 exemplos e imprime o endereço do experimento,
+acessível somente ao workspace. Para gerar o link público do dataset, execute
+uma vez, após a avaliação:
+
+```python
+from langsmith import Client
+import os
+print(Client().share_dataset(dataset_name=f"{os.environ['LANGSMITH_PROJECT']}-eval")["url"])
+```
+
+Cada nova execução da avaliação gera um experimento. Se alguma métrica ficar
+abaixo de 0,8, revise a v2, refaça o push e compare os experimentos no
+LangSmith. Não altere o dataset para ajustar as notas.
+
 ## Objetivo
 
 Você deve entregar um software capaz de:
