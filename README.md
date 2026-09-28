@@ -3,9 +3,7 @@
 ## Estado deste fork
 
 Este fork implementa o pull da v1, a v2 em YAML, o push público e os seis testes
-de estrutura. A avaliação remota depende das credenciais pessoais do LangSmith e
-de um provedor de LLM. Os números ilustrativos do enunciado não são resultados
-deste fork.
+de estrutura. A primeira avaliação remota foi concluída com aprovação.
 
 ## Técnicas Aplicadas (Fase 2)
 
@@ -24,12 +22,27 @@ para preservar os fatos do relato e explicitar lacunas sem inventar requisitos.
 
 ## Resultados Finais
 
-Ainda não há avaliação executada neste fork; portanto, não há notas, captura de
-tela nem link público de dataset para relatar. Após configurar as credenciais,
-execute a avaliação, confira as cinco médias e compartilhe o dataset uma única
-vez. Registre aqui o URL público e as capturas da avaliação e de pelo menos três
-traces. Só declare aprovação quando **cada uma** das cinco métricas e a média
-forem pelo menos 0,8.
+Experimento de 27/09/2026: 15 exemplos avaliados com `gpt-4.1-mini` para
+geração e avaliação. A primeira versão publicada da v2 atingiu o mínimo de
+0,8 em todas as métricas; por isso, não houve necessidade de outras iterações.
+
+| Métrica | Média |
+| --- | ---: |
+| Helpfulness | 0,83 |
+| Correctness | 0,83 |
+| F1-Score | 0,81 |
+| Clarity | 0,81 |
+| Precision | 0,85 |
+| Média geral | 0,8256 |
+
+- [Dataset público com os 15 exemplos e o experimento](https://smith.langchain.com/public/e81f2e57-cdc6-4c2c-ac4f-4d8eec932115/d)
+- [Captura pública do dashboard com as cinco médias](evidencias/dataset-publico.png)
+- [Comparação do experimento no workspace](https://smith.langchain.com/o/a1a9be2d-b8a3-431d-b3c9-6d48d37c65af/datasets/2464de5d-3e55-4bb3-905f-7821fdc8291c/compare?selectedSessions=8b91dbdf-79e9-4834-bf18-262c686ad107)
+- Traces detalhados no workspace: [exemplo 1](https://smith.langchain.com/o/a1a9be2d-b8a3-431d-b3c9-6d48d37c65af/projects/p/8b91dbdf-79e9-4834-bf18-262c686ad107/r/01a0e579-15e4-7770-a846-00dd9611ca62?poll=true), [exemplo 2](https://smith.langchain.com/o/a1a9be2d-b8a3-431d-b3c9-6d48d37c65af/projects/p/8b91dbdf-79e9-4834-bf18-262c686ad107/r/01a0e579-0ee0-7fd0-a692-b391a2503dc6?poll=true), [exemplo 3](https://smith.langchain.com/o/a1a9be2d-b8a3-431d-b3c9-6d48d37c65af/projects/p/8b91dbdf-79e9-4834-bf18-262c686ad107/r/01a0e579-07bc-75b0-a4cd-dfa33cda8a51?poll=true).
+
+O link público do dataset e a captura do dashboard são acessíveis sem entrar no
+workspace. Os links diretos dos traces exigem acesso ao workspace; no dataset
+público, abra o experimento para inspecionar as execuções por exemplo.
 
 ## Como Executar
 
@@ -56,7 +69,7 @@ O pull sobrescreve a cópia local da v1 com o prompt semente publicado. O push
 publica `<handle>/bug_to_user_story_v2` como prompt público. O avaliador cria
 ou reutiliza o dataset com 15 exemplos e imprime o endereço do experimento,
 acessível somente ao workspace. Para gerar o link público do dataset, execute
-uma vez, após a avaliação:
+uma vez, após a avaliação, somente se ainda não foi compartilhado:
 
 ```python
 from langsmith import Client
