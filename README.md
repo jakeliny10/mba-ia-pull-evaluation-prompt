@@ -1,5 +1,8 @@
 # Pull, Otimização e Avaliação de Prompts com LangChain e LangSmith
 
+[Fork público na conta pessoal jakeliny10](https://github.com/jakeliny10/mba-ia-pull-evaluation-prompt).
+Material do desafio de MBA para implementação e avaliação de prompts.
+
 ## Estado deste fork
 
 Este fork implementa o pull da v1, a v2 em YAML, o push público e os seis testes
